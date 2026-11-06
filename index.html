@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Feedback Form</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Student Feedback Form</h1>
+        <p>Please share your feedback with us.</p>
+
+        <form id="feedbackForm">
+
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Enter your name" required>
+
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Enter your email" required>
+
+            <label>Course</label>
+            <input type="text" name="course" placeholder="Enter your course" required>
+
+            <label>Feedback</label>
+            <textarea name="feedback" placeholder="Enter your feedback" required></textarea>
+
+            <button type="submit">Submit Feedback</button>
+
+            <p id="message"></p>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        // Paste your Apps Script URL here
+        const scriptURL = "https://script.google.com/macros/s/AKfycby9EFzjBd3no1uBJBJpEaGD36_ljrds8DCvFwule1uNnveJhSoGVHGipAy4mTkSLIY/exec";
+
+        const form = document.getElementById("feedbackForm");
+        const message = document.getElementById("message");
+
+        form.addEventListener("submit", function(e) {
+
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const data = new URLSearchParams(formData);
+
+            message.innerText = "Submitting...";
+
+            fetch(scriptURL, {
+                method: "POST",
+                mode: "no-cors",
+                body: data
+            })
+
+            .then(function() {
+                message.innerText = "Feedback submitted successfully!";
+                form.reset();
+            })
+
+            .catch(function(error) {
+                message.innerText = "Something went wrong!";
+                console.log(error);
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
